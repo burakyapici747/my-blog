@@ -36,7 +36,7 @@ jobs:
           file: ./my-website-fe/docker/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest,${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ steps.extract_version.outputs.VERSION }}
   deploy:
     name: Deploy Frontend
     runs-on: self-hosted
