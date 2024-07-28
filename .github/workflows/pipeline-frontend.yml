@@ -6,7 +6,7 @@ on:
       - ci/pipeline
     paths:
       - my-website-fe/**
-      - ./docker/**
+      - my-website-fe/docker/**
       - 'docker-compose.yml'
       - .github/workflows/*-frontend.yml
 

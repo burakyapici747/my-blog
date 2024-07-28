@@ -1,4 +1,4 @@
-name: BLOG PIPELINE
+name: BLOG_BACKEND_PIPELINE
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - ci/pipeline
     paths:
       - my-website-be/**
-      - ./docker/**
+      - my-website-be/docker/**
       - 'docker-compose.yml'
       - .github/workflows/*-backend.yml
 jobs:
