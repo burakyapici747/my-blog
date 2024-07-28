@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+}
+
+*{
+    color: black!important;
+}
+
+body{
+
+    background-color: rgb(255, 255, 248)!important;
+    background-image: url("/img/bg1.png");
+}
+
+.article-item{
+    margin-bottom: 1.3rem;
+}
+
+@layer components {
+    .site-margin-bottom{
+        @apply mb-10
+    }
+    .site-margin-top{
+        @apply mt-10
+    }
+}
+
+@font-face {
+    font-family: "FFF TUSJ";
+    src: url("/font/FFF_Tusj.ttf");
+}
+@font-face {
+    font-family: "georgia";
+    src: url("/font/georgia.ttf");
+}
+@font-face {
+    font-family: "georgiai";
+    src: url("/font/georgiai.ttf");
+}
