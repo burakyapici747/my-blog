@@ -47,7 +47,7 @@ services:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
-	frontend:
+  frontend:
     container_name: frontend-nextjs
     build:
       context: ./my-website-fe
