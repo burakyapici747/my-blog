@@ -1,0 +1,129 @@
+name: BLOG PIPELINE
+
+on:
+  push:
+    branches:
+      - ci/pipeline
+    paths:
+      - my-website-be/**
+      - ./docker/**
+      - 'docker-compose.yml'
+      - .github/workflows/*-backend.yml
+jobs:
+  compile:
+    runs-on: self-hosted
+    name: Compile Project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-jdk@v4
+        with:
+          java-version: 17
+          distribution: 'eclipse-temurin'
+
+      - name: Compile Project
+        run: |
+          cd my-website-be
+          ./gradlew clean build
+
+  unit-tests:
+    runs-on: self-hosted
+    name: Unit tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-jdk@v4
+        with:
+          java-version: 17
+          distribution: 'eclipse-temurin'
+
+      - name: Running unit tests
+        run: |
+          cd my-website-be
+          ./gradlew clean test
+  
+  build:
+    runs-on: self-hosted
+    name: Build backend
+    needs: [compile, unit-tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-jdk@v4
+        with:
+          java-version: 17
+          distribution: 'eclipse-temurin'
+
+      - name: Running unit tests
+        run: |
+          cd my-website-be
+          ./gradlew clean compile
+
+
+
+  build-image:
+    name: Build Docker Image
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup JDK
+        uses: actions/setup-jdk@v4
+        with:
+          java-version: 17
+          distribution: 'eclipse-temurin'
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd my-website-be
+          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username:${{ secrets.DOCKERHUB_USERNAME}}
+          password:${{ secrets.DOCKERHUB_TOKEN}}
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: my-website-be
+          file: ./my-website-be/docker/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/blog-api:${{ steps.extract_version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/blog-api:latest
+          build-args:
+            PROFILE=dev
+            APP_VERSION=${{ steps.extract_version.outputs.VERSION}}
+  deploy:
+    name: Deploy Backend
+    runs-on: self-hosted
+    needs: [build-image]
+    steps:
+      - name: Create deployment folder
+        run: ssh ${{ secrets.VDS_USERNAME }}@${{secrets.VDS_IP}} "mkdir -p ci-cd"
+
+      - name: Copy docker-compose file
+        run: scp -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+
+      - name: Set ENV variable and deploy
+        run: |
+          ssh ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
+          cd ci-cd
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
+          EOF
