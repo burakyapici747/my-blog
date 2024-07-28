@@ -1,0 +1,8 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = git@github.com:burakyapici747/my-website-be.git
+	fetch = +refs/*:refs/*
+	mirror = true

@@ -1,0 +1,17 @@
+# pack-refs with: peeled fully-peeled sorted 
+17b275d749df15f6d73cf2c656e9e1c80f3299fd refs/heads/dev
+380c17c5bf6380ab4a292feed75c131d2eac0f4e refs/heads/feature/response-refactoring
+e439eace2cd4dc8558484abfbec16931a06d5d52 refs/heads/main
+e6c23996c13d02bec8e6be360a28b0c6b77d3d59 refs/pull/1/head
+f0b3901115fc807db6d7f387724455c9644131b1 refs/pull/10/head
+ab4795f1b527cafae9fd54e42ce325b8a96de3b0 refs/pull/11/head
+b8b7cd1867ba2cb65504640e6c18b75d69469746 refs/pull/12/head
+17b275d749df15f6d73cf2c656e9e1c80f3299fd refs/pull/13/head
+081c6aec8ea36cdaecbebf3a761934939e29ccf3 refs/pull/2/head
+9dc98f62190b7816f71bccfedfa5e7a9faa589e4 refs/pull/3/head
+fd2b8e1ef82e8e30318e396505566e65f3f11a45 refs/pull/4/head
+71ac475c046c6fc72340522956e907b4aa53e763 refs/pull/5/head
+ac02e73b6a95746372e39229c6226c0b2456fafd refs/pull/6/head
+289ea37394428df2bb3dec4b2d13044eb95062fe refs/pull/7/head
+8d4dd85190c0ff29079dd2e846ea640c37fceac3 refs/pull/8/head
+380c17c5bf6380ab4a292feed75c131d2eac0f4e refs/pull/9/head
