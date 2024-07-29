@@ -122,7 +122,7 @@ jobs:
 
       - name: Set ENV variable and deploy
         run: |
-          ssh ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
+          ssh -p ${{ secrets.VDS_PORT }}@${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
