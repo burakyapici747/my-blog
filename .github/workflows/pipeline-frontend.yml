@@ -56,8 +56,9 @@ jobs:
 
       - name: Copy docker-compose file
         run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+
       - name: Copy ENV file
-        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no my-website-fe/.env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
+        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no .env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
 
       - name: Deploy
         run: |
