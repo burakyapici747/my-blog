@@ -55,11 +55,11 @@ jobs:
         run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
-        run: scp -p ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
       - name: Set ENV variable and deploy
         run: |
-          ssh -P ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
+          ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
           cd ci-cd
           docker compose -f docker-compose.yml pull -q
           docker compose -f docker-compose.yml up -d
