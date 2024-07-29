@@ -59,8 +59,8 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          ssh -p ${{ VDS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
           cd ci-cd
-          docker compose -f docker-compose.yml pull frontend -q
-          docker compose -f docker-compose.yml up frontend -d
+          docker compose -f docker-compose.yml pull frontend nginx -q
+          docker compose -f docker-compose.yml up -d frontend nginx
           EOF
