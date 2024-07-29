@@ -9,6 +9,8 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src/ src/
 
+RUN chmod +x gradlew
+
 RUN ./gradlew build --no-daemon -x test
 
 # Runtime aşaması
@@ -18,7 +20,8 @@ ARG PROFILE=dev
 ARG APP_VERSION=1.0.0
 
 RUN mkdir /app
-COPY --from=build /build/target/spring-boot-application-*.jar /app/
+
+COPY --from=build /build/build/libs/*.jar /app/
 
 EXPOSE 8080
 

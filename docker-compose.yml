@@ -20,7 +20,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
   backend:
     container_name: backend-spring-boot
     depends_on:
@@ -60,6 +59,8 @@ services:
       backend:
         condition: service_started
   nginx:
+    build:
+      context: ./my-website-fe
     image: nginx:alpine
     container_name: api-gateway
     ports:
