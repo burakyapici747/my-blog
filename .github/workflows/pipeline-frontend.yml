@@ -6,7 +6,8 @@ on:
       - ci/pipeline
     paths:
       - my-website-fe/**
-      - my-website-fe/docker/**
+      - my-website-be/**
+      - ./docker/**
       - 'docker-compose.yml'
       - .github/workflows/*-frontend.yml
 
@@ -20,16 +21,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
       - name: Extract project version
         id: extract_version
         run: |
           cd my-website-fe
-          VERSION=$(jq -r '.version' package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "VERSION=$VERSION"
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -44,7 +40,7 @@ jobs:
           file: ./my-website-fe/docker/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ env.VERSION }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:latest,${{ secrets.DOCKERHUB_USERNAME }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }}
 
   deploy:
     name: Deploy Frontend
@@ -52,18 +48,20 @@ jobs:
     needs: [build-image]
     steps:
       - name: Create deployment folder
-        run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+        run: ssh ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+
+      - name: Copy project files
+        run: |
+          scp -r my-website-fe ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/
+          scp -r my-website-be ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/
 
       - name: Copy docker-compose file
-        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+        run: scp -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
-      - name: Copy ENV file
-        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no .env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
-
-      - name: Deploy
+      - name: Set ENV variable and deploy
         run: |
-          ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
+          ssh ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
           cd ci-cd
-          docker compose -f docker-compose.yml pull frontend nginx -q
-          docker compose -f docker-compose.yml up -d frontend nginx
+          docker compose -f docker-compose.yml pull -q
+          docker compose -f docker-compose.yml up -d
           EOF
