@@ -52,7 +52,7 @@ jobs:
     needs: [build-image]
     steps:
       - name: Create deployment folder
-        run: ssh ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+        run: ssh -p ${{ secrets.VDS_PORT }}@${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
         run: scp -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
