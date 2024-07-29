@@ -56,3 +56,11 @@ jobs:
 
       - name: Copy docker-compose file
         run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+
+      - name: Deploy
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          cd ci-cd
+          docker compose -f docker-compose.yml pull frontend -q
+          docker compose -f docker-compose.yml up frontend -d
+          EOF
