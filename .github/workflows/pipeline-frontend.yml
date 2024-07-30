@@ -44,21 +44,22 @@ jobs:
           file: ./my-website-fe/docker/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ env.VERSION }} deploy:
-      - name: Deploy Frontend
-        runs-on: self-hosted
-        needs: [build-image]
-        steps:
-          - name: Create deployment folder
-            run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ env.VERSION }} 
+  deploy:
+    - name: Deploy Frontend
+      runs-on: self-hosted
+      needs: [build-image]
+      steps:
+        - name: Create deployment folder
+          run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
 
-          - name: Copy docker-compose file
-            run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+        - name: Copy docker-compose file
+          run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
-          - name: Deploy
-            run: |
-              ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
-              cd ci-cd
-              docker compose --env-file .env -f docker-compose.yml pull frontend -q
-              docker compose --env-file .env -f docker-compose.yml up -d frontend
-              EOF
+        - name: Deploy
+          run: |
+            ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
+            cd ci-cd
+            docker compose --env-file .env -f docker-compose.yml pull frontend -q
+            docker compose --env-file .env -f docker-compose.yml up -d frontend
+            EOF
