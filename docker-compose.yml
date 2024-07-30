@@ -54,6 +54,18 @@ services:
     ports:
       - "3000:3000"
 
+  nginx:
+    image: nginx:alpine
+    container_name: api-gateway
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - myblog-network
+    depends_on:
+      - frontend
+
 networks:
   myblog-network:
     driver: bridge
