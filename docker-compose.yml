@@ -48,11 +48,11 @@ services:
 
   frontend:
     container_name: frontend-nextjs
-    image: burakyapici747/blog-frontend:1.1.1
+    image: burakyapici747/blog-frontend:1.1.2
     networks:
       - myblog-network
     ports:
-      - "3000:3000"
+      - 3000:3000
 
   nginx:
     image: nginx:alpine

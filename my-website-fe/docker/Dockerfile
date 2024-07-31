@@ -7,6 +7,8 @@ RUN npm install
 
 COPY . .
 
+EXPOSE 3000
+
 RUN npm run build
 
 # Nginx ile Ters Proxy Aşaması
@@ -16,7 +18,5 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build-stage /app/.next /usr/share/nginx/html/.next
 COPY --from=build-stage /app/public /usr/share/nginx/html/public
-
-EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]
