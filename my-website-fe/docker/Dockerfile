@@ -1,20 +1,22 @@
-# Build stage
-FROM node:18.17.0-alpine AS builder
+# Aşama 1: Next.js uygulamasını oluşturma
+FROM node:18 AS build-stage
 WORKDIR /app
-COPY package*.json ./
+
+# Gerekli dosyaları kopyalayın ve bağımlılıkları yükleyin
+COPY package.json package-lock.json ./
 RUN npm install
+
+# Uygulama dosyalarını kopyalayın ve uygulamayı oluşturun
 COPY . .
 RUN npm run build
 
-# Production stage
-FROM node:18.17.0-alpine
+# Aşama 2: Uygulamayı çalıştırma
+FROM node:18-alpine AS production-stage
 WORKDIR /app
-COPY --from=builder /app/next.config.mjs ./next.config.mjs
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+
+# Yapı dosyalarını ve bağımlılıkları kopyalayın
+COPY --from=build-stage /app /app
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
