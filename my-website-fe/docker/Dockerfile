@@ -1,22 +1,20 @@
-FROM node:18 AS build-stage
+# Build stage
+FROM node:18.17.0-alpine AS builder
 WORKDIR /app
-
-COPY package.json package-lock.json ./
-
+COPY package*.json ./
 RUN npm install
-
 COPY . .
+RUN npm run build
+
+# Production stage
+FROM node:18.17.0-alpine
+WORKDIR /app
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
-RUN npm run build
-
-# Nginx ile Ters Proxy Aşaması
-FROM nginx:alpine
-
-COPY ./nginx.conf /etc/nginx/nginx.conf
-
-COPY --from=build-stage /app/.next /usr/share/nginx/html/.next
-COPY --from=build-stage /app/public /usr/share/nginx/html/public
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
