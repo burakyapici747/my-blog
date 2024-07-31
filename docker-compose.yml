@@ -48,7 +48,7 @@ services:
 
   frontend:
     container_name: frontend-nextjs
-    image: burakyapici747/blog-frontend:1.1.0
+    image: burakyapici747/blog-frontend:1.1.1
     networks:
       - myblog-network
     ports:
