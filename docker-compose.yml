@@ -23,7 +23,7 @@ services:
 
   backend:
     container_name: backend-spring-boot
-    image: burakyapici747/blog-backend:1.0.5
+    image: burakyapici747/blog-backend:latest
     depends_on:
       mysqldb:
         condition: service_healthy
@@ -48,7 +48,7 @@ services:
 
   frontend:
     container_name: frontend-nextjs
-    image: burakyapici747/blog-frontend:2.0.0
+    image: burakyapici747/blog-frontend:latest
     networks:
       - myblog-network
     ports:
