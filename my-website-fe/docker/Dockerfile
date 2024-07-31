@@ -17,6 +17,6 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-stage /app/.next /usr/share/nginx/html/.next
 COPY --from=build-stage /app/public /usr/share/nginx/html/public
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]
