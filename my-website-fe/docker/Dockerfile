@@ -10,13 +10,16 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Aşama 2: Uygulamayı çalıştırma
-FROM node:18-alpine AS production-stage
+# Aşama 2: Uygulamayı Nginx ile sunma
+FROM nginx:alpine AS production-stage
 WORKDIR /app
 
-# Yapı dosyalarını ve bağımlılıkları kopyalayın
-COPY --from=build-stage /app /app
+# Yapı dosyalarını Nginx'e kopyalayın
+COPY --from=build-stage /app/.next /usr/share/nginx/html/.next
+COPY --from=build-stage /app/public /usr/share/nginx/html/public
 
-EXPOSE 3000
+COPY nginx.conf /etc/nginx/nginx.conf
 
-CMD ["npm", "run", "start"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
