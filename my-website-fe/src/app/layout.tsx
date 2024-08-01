@@ -1,4 +1,4 @@
-import '../../public/style/globals.css'
+import './globals.css'
 import '@radix-ui/themes/styles.css';
 import {Theme, ThemePanel} from '@radix-ui/themes';
 import type { Metadata } from 'next'
