@@ -44,7 +44,7 @@ jobs:
           file: ./my-website-fe/docker/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ env.VERSION }} 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:latest,${{ secrets.DOCKERHUB_USERNAME }}/blog-frontend:${{ env.VERSION }} 
 
   deploy:
       name: Deploy Frontend
