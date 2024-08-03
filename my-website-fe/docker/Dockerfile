@@ -1,25 +1,20 @@
-# Aşama 1: Next.js uygulamasını oluşturma
-FROM node:18 AS build-stage
+# Build stage
+FROM node:18.17.0-alpine AS builder
 WORKDIR /app
-
-# Gerekli dosyaları kopyalayın ve bağımlılıkları yükleyin
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
-
-# Uygulama dosyalarını kopyalayın ve uygulamayı oluşturun
 COPY . .
 RUN npm run build
 
-# Aşama 2: Uygulamayı Nginx ile sunma
-FROM nginx:alpine AS production-stage
+# Production stage
+FROM node:18.17.0-alpine
 WORKDIR /app
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
-# Yapı dosyalarını Nginx'e kopyalayın
-COPY --from=build-stage /app/.next /usr/share/nginx/html/.next
-COPY --from=build-stage /app/public /usr/share/nginx/html/public
+EXPOSE 3000
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
