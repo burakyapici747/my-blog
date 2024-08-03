@@ -45,6 +45,7 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:latest,${{ secrets.DOCKERHUB_USERNAME }}/my-website-fe:${{ env.VERSION }} 
+
   deploy:
       name: Deploy Frontend
       runs-on: self-hosted
