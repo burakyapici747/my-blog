@@ -21,7 +21,10 @@ jobs:
           fetch-depth: 0
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        env:
+          VDS_PASSWORD: ${{ secrets.VDS_PASSWORD }}
+        run: |
+          echo $VDS_PASSWORD | sudo -S apt-get install -y jq
 
       - name: Extract project version
         id: extract_version
@@ -52,13 +55,16 @@ jobs:
       needs: [build-image]
       steps:
         - name: Create deployment folder
-          run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+          run: |
+            echo ${{ secrets.VDS_PASSWORD }} | ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
 
         - name: Copy docker-compose file
-          run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+          run: |
+            echo ${{ secrets.VDS_PASSWORD }} | scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
         - name: Deploy
           run: |
+            echo ${{ secrets.VDS_PASSWORD }}
             ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
             cd ci-cd
             docker compose -f docker-compose.yml pull frontend nginx -q
