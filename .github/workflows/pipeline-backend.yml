@@ -42,8 +42,8 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-jdk@v4
         with:
-          java-version: 17
-          distribution: 'eclipse-temurin'
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Running unit tests
         run: |
@@ -118,16 +118,23 @@ jobs:
     needs: [build-image]
     steps:
       - name: Create deployment folder
-        run: ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{secrets.VDS_IP}} "mkdir -p ci-cd"
+        run: |
+          echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
+          ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{secrets.VDS_IP}} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
-        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+        run: |
+          echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
+          scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
       - name: Copy ENV file
-        run: scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
+        run: |
+          echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
+          scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
 
       - name: Set ENV variable and deploy
         run: |
+          echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
           ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
           cd ci-cd
           docker compose --env-file .env -f docker-compose.yml pull backend mysqldb -q
