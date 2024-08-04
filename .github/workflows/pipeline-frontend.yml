@@ -56,15 +56,17 @@ jobs:
       steps:
         - name: Create deployment folder
           run: |
-            echo ${{ secrets.VDS_PASSWORD }} | ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
+            echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
+            ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} "mkdir -p ci-cd"
 
         - name: Copy docker-compose file
           run: |
-            echo ${{ secrets.VDS_PASSWORD }} | scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
+            echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
+            scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no docker-compose.yml ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/docker-compose.yml
 
         - name: Deploy
           run: |
-            echo ${{ secrets.VDS_PASSWORD }}
+            echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
             ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
             cd ci-cd
             docker compose -f docker-compose.yml pull frontend nginx -q
