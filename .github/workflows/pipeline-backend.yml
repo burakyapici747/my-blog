@@ -27,6 +27,7 @@ jobs:
 
       - name: Compile Project
         run: |
+          chmod +x my-website-be/gradlew
           cd my-website-be
           ./gradlew clean build
 
@@ -47,6 +48,7 @@ jobs:
 
       - name: Running unit tests
         run: |
+          chmod +x my-website-be/gradlew
           cd my-website-be
           ./gradlew clean test
   
@@ -68,6 +70,7 @@ jobs:
 
       - name: Running unit tests
         run: |
+          chmod +x my-website-be/gradlew
           cd my-website-be
           ./gradlew clean compile
 
