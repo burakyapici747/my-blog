@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Start MySQL container
-        run: docker-compose -f ./../../docker-compose.yml up mysqldb -d
+        run: docker-compose up mysqldb -d
 
 
       - name: Compile Project
