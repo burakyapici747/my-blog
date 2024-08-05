@@ -14,13 +14,6 @@ jobs:
   compile:
     runs-on: self-hosted
     name: Compile Project
-    services:
-      db:
-        image: mysql:latest
-        ports:
-          - "${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}"
-        options: --health-cmd "mysqladmin ping --silent" --health-interval 10s --health-timeout 5s --health-retries 3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,15 +27,8 @@ jobs:
           distribution: 'temurin'
 
       - name: Start MySQL container
-        run: docker-compose -f my-website-be/docker-compose.yml up -d
+        run: docker-compose -f ./../../docker-compose.yml up mysqldb -d
 
-      - name: Wait for MySQL to be ready
-        run: |
-          while ! docker exec db-mysql mysqladmin --${MYSQLDB_USER}=${MYSQLDB_USER} --${MYSQLDB_PASSWORD}=${MYSQLDB_PASSWORD} --host "127.0.0.1" ping --silent &> /dev/null ; do
-            echo "Waiting for database connection..."
-            sleep 2
-          done
-          echo "Database is up and running"
 
       - name: Compile Project
         run: |
@@ -95,7 +81,7 @@ jobs:
 
       - name: Stop MySQL container
         if: always()
-        run: docker-compose down db-mysql
+        run: docker-compose down mysqldb
 
   build-image:
     name: Build Docker Image
