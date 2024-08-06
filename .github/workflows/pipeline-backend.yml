@@ -94,6 +94,7 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
+          chmod +x my-website-be/gradlew
           cd my-website-be
           VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
