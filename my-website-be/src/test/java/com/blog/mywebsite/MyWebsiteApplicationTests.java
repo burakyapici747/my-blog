@@ -9,7 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 class MyWebsiteApplicationTests {
 
 	@Test
-	void contextLoads(ApplicationContext context) {
-		assertThat(context).isNotNull();
+	void contextLoads() {
 	}
 }
