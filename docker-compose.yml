@@ -23,7 +23,7 @@ services:
 
   backend:
     container_name: backend-springboot
-    image: burakyapici747/blog-backend:latest
+    image: burakyapici747/blog-api:latest
     depends_on:
       mysqldb:
         condition: service_healthy
