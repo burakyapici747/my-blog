@@ -74,7 +74,7 @@ jobs:
           chmod +x my-website-be/gradlew
           cd my-website-be
           ./gradlew clean compileJava
-	
+
   build-image:
     name: Build Docker Image
     runs-on: self-hosted
