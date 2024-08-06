@@ -32,7 +32,7 @@ jobs:
           cd my-website-be
           ./gradlew clean build
 		  
-	unit-tests:
+  unit-tests:
     runs-on: self-hosted
     name: Unit tests
     steps:
@@ -53,7 +53,7 @@ jobs:
           cd my-website-be
           ./gradlew clean test
 	
-	build:
+  build:
     runs-on: self-hosted
     name: Build backend
     needs: [compile, unit-tests]
@@ -75,7 +75,7 @@ jobs:
           cd my-website-be
           ./gradlew clean compileJava
 	
-	build-image:
+  build-image:
     name: Build Docker Image
     runs-on: self-hosted
     needs: [build]
@@ -116,7 +116,7 @@ jobs:
             PROFILE=dev
             APP_VERSION=${{ steps.extract_version.outputs.VERSION}}
 			
-	deploy:
+  deploy:
     name: Deploy Backend
     runs-on: self-hosted
     needs: [build-image]
