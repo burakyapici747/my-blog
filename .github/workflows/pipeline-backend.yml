@@ -135,7 +135,7 @@ jobs:
       - name: Copy ENV file
         run: |
           echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
-          scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
+          scp -P ${{ secrets.VDS_PORT }} -oStrictHostKeyChecking=no .env ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }}:ci-cd/.env
 
       - name: Set ENV variable and deploy
         run: |
