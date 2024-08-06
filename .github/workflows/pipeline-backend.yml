@@ -26,10 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Start MySQL container
-        run: docker-compose up mysqldb -d
-
-
       - name: Compile Project
         run: |
           chmod +x my-website-be/gradlew
@@ -78,10 +74,6 @@ jobs:
           chmod +x my-website-be/gradlew
           cd my-website-be
           ./gradlew clean compile
-
-      - name: Stop MySQL container
-        if: always()
-        run: docker-compose down mysqldb
 
   build-image:
     name: Build Docker Image
