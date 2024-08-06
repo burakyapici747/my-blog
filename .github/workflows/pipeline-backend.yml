@@ -67,7 +67,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'eclipse-temurin'
+          distribution: 'temurin'
 
       - name: Running unit tests
         run: |
@@ -89,7 +89,7 @@ jobs:
         uses: actions/setup-jdk@v4
         with:
           java-version: 17
-          distribution: 'eclipse-temurin'
+          distribution: 'temurin'
 
       - name: Extract project version
         id: extract_version
