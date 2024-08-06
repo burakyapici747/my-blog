@@ -30,8 +30,8 @@ jobs:
         run: |
           chmod +x my-website-be/gradlew
           cd my-website-be
-          ./gradlew clean build
-		  
+          ./gradlew clean build  
+
   unit-tests:
     runs-on: self-hosted
     name: Unit tests
