@@ -16,8 +16,8 @@ RUN ./gradlew build --no-daemon -x test
 # Runtime aşaması
 FROM eclipse-temurin:17-jdk-jammy
 
-ARG PROFILE=dev
-ARG APP_VERSION=1.0.0
+ARG PROFILE
+ARG APP_VERSION
 
 RUN mkdir /app
 
