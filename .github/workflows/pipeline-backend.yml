@@ -142,6 +142,6 @@ jobs:
           echo "${{ secrets.VDS_SSH_KEY }}" > ssh_key
           ssh -p ${{ secrets.VDS_PORT }} ${{ secrets.VDS_USERNAME }}@${{ secrets.VDS_IP }} <<EOF
           cd ci-cd
-          docker compose --env-file .env -f docker-compose.yml pull backend mysqldb -q
-          docker compose --env-file .env -f docker-compose.yml up -d backend mysqldb
+          docker compose --env-file .env -f docker-compose.yml pull mysqldb backend -q
+          docker compose --env-file .env -f docker-compose.yml up -d mysqldb backend
           EOF
