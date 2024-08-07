@@ -11,7 +11,7 @@ COPY src/ src/
 
 RUN chmod +x gradlew
 
-RUN ./gradlew build --no-daemon -x test
+RUN ./gradlew build -x test
 
 # Runtime aşaması
 FROM eclipse-temurin:17-jdk-jammy
@@ -29,4 +29,4 @@ ENV DB_URL=jdbc:mysql://db-mysql:3306/mywebsite
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE}", "-Dspring.datasource.url${DB_URL}", "/app/my-website-${JAR_VERSION}.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE}", "-Dspring.datasource.url${DB_URL}", "/app/my-website-3.0.0.jar"]
