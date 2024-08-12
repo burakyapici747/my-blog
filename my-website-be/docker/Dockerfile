@@ -21,7 +21,7 @@ ARG APP_VERSION
 
 RUN mkdir /app
 
-COPY --from=build /build/build/libs/*.jar /app/
+COPY --from=build /build/build/libs/*.jar /app/my-website-${APP_VERSION}.jar
 
 EXPOSE 8080
 
