@@ -131,7 +131,7 @@ public class SecurityConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/v1/api/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://www.burakyapici.com:443")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);
