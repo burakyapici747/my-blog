@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://www.burakyapici.com/v1/api";
+const baseUrl = "https://www.burakyapici.com/v1/api";
 
 export default axios.create({
     baseURL: baseUrl,
