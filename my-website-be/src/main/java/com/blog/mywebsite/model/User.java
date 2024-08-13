@@ -14,7 +14,11 @@ public class User extends BaseEntity {
     private String email;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_ROLE")
+    @JoinTable(
+            name = "USER_ROLE",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
     private List<Role> roles = new ArrayList<>();
 
     public String getName(){
