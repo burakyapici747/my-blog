@@ -10,6 +10,7 @@ import com.blog.mywebsite.security.CustomAuthenticationFilter;
 import com.blog.mywebsite.security.CustomAuthorizationFilter;
 import com.blog.mywebsite.security.EmailAuthenticationProvider;
 import com.blog.mywebsite.service.impl.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,6 +33,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+    @Value("${spring.graphql.cors.allowed-origins}")
+    private String allowedOrigins;
     private final CustomUserDetailsService customUserDetailsService;
     public SecurityConfiguration(
             CustomUserDetailsService customUserDetailsService
@@ -131,7 +134,7 @@ public class SecurityConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/v1/api/**")
-                        .allowedOrigins("https://www.burakyapici.com", "https://burakyapici.com")
+                        .allowedOrigins(allowedOrigins.split(","))
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);

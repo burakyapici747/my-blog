@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/mywebsite
+    username: burakyapici
+    password: Bfp711g+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  graphql:
+    cors:
+      allowed-origins: "https://www.burakyapici.com, https://burakyapici.com"
+
+security:
+  jwt:
+    secret: ${Y!V4aZ_U!^a|N1Q}
