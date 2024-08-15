@@ -2,4 +2,4 @@ spring:
   application:
     name: Burak Blog
   profiles:
-    active: DEV
+    active: prod

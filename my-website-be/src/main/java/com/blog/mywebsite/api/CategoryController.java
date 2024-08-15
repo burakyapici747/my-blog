@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.blog.mywebsite.constant.APIConstant.CATEGORY_URL;
+
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping(CATEGORY_URL)
 @Validated
 public class CategoryController {
     private final CategoryService categoryService;

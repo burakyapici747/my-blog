@@ -33,7 +33,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    @Value("${spring.graphql.cors.allowed-origins}")
+    @Value("${spring.cors.allowed-origins}")
     private String allowedOrigins;
     private final CustomUserDetailsService customUserDetailsService;
     public SecurityConfiguration(
