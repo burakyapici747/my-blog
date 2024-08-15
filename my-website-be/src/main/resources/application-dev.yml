@@ -9,7 +9,3 @@ spring:
     show-sql: true
   cors:
     allowed-origins: "http://localhost:3000"
-
-security:
-  jwt:
-    secret: ${Y!V4aZ_U!^a|N1Q}
