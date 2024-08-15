@@ -5,7 +5,7 @@ import useFetch from "@/hook/useFetch";
 import {getAllGroupedAndDecreasedByYear} from "@/service/articleService";
 import {useEffect} from "react";
 import {setArticles} from "@/lib/features/articles/articleSlice";
-import ArticleYearGroup from "@/service/model/ArticleYearGroup";
+import ArticleYearGroup from "@/service/model/articleYearGroup";
 import {Article} from "@/service/model/article";
 
 export const ArticlePreviewWrapper = () => {
