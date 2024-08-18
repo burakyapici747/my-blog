@@ -30,13 +30,13 @@ export const ArticlePreviewWrapper = () => {
                             <Grid className="articles site-margin-bottom" gap="2" columns="1">
                                 {articles.map((article, index) => (
                                     <Box className="article-item" id={index.toString()} key={index}>
-                                        <article className="article-archive-item flex flex-col mb-1">
+                                        <Article className="article-archive-item flex flex-col mb-1">
                                             <ArticlePreviewTitle title={article.attributes.title}/>
                                             <ArticlePreviewBody
                                                 content={article.attributes.content}
                                                 readingTime={article.attributes.readingTime}
                                             />
-                                        </article>
+                                        </Article>
                                     </Box>
                                 ))}
                             </Grid>
