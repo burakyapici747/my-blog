@@ -8,7 +8,7 @@ interface pageProps {
 const ArticleDetailPage: FC<pageProps> = ({ params }) => {
   return (
     <> 
-    <Container></Container> 
+    <Container/>
       <Container className="site-main-container" size="3">
         <article>
           <Box>
