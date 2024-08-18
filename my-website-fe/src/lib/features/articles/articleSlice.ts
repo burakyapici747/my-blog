@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import ArticleYearGroup from "@/service/model/ArticleYearGroup";
+import ArticleYearGroup from "@/service/model/articleYearGroup";
 import {Article} from "@/service/model/article";
 
 export interface ArticleState {
