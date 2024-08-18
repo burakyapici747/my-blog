@@ -21,7 +21,7 @@ ARG APP_VERSION
 
 RUN mkdir /app
 
-COPY --from=build /build/build/libs/*.jar /app/my-website-3.0.1.jar
+COPY --from=build /build/build/libs/*.jar /app/my-website-3.0.2.jar
 
 EXPOSE 8080
 
@@ -29,4 +29,4 @@ ENV DB_URL=jdbc:mysql://db-mysql:3306/mywebsite
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE}", "-Dspring.datasource.url${DB_URL}", "/app/my-website-3.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ACTIVE_PROFILE}", "-Dspring.datasource.url${DB_URL}", "/app/my-website-3.0.2.jar"]

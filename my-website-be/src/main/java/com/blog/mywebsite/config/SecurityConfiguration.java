@@ -33,8 +33,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    @Value("${spring.cors.allowed-origins}")
-    private String allowedOrigins;
+//    @Value("${spring.cors.allowed-origins}")
+//    private String allowedOrigins;
     private final CustomUserDetailsService customUserDetailsService;
     public SecurityConfiguration(
             CustomUserDetailsService customUserDetailsService
@@ -134,7 +134,7 @@ public class SecurityConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/v1/api/**")
-                        .allowedOrigins(allowedOrigins.split(","))
+                        .allowedOrigins("https://www.burakyapici.com", "https://burakyapici.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);
