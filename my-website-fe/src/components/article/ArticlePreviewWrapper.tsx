@@ -6,22 +6,22 @@ import {getAllGroupedAndDecreasedByYear} from "@/service/articleService";
 import {useEffect} from "react";
 import {setArticles} from "@/lib/features/articles/articleSlice";
 import ArticleYearGroup from "@/service/model/articleYearGroup";
-import {Article} from "@/service/model/article";
 
 export const ArticlePreviewWrapper = () => {
     const [loading, data] = useFetch(getAllGroupedAndDecreasedByYear, {});
 
     useEffect(() => {
         if (data){
-            setArticles(data as ArticleYearGroup<Article>);
+            setArticles(data as ArticleYearGroup);
         }
     }, [])
 
     const renderArticles = () => {
+        // @ts-ignore
         return (
             <>
                 {(!loading) ? (
-                    Object.entries(data as ArticleYearGroup<Article>).map(([year, articles]) => (
+                    Object.entries(data as ArticleYearGroup).map(([year, articles]) => (
                         <section id={year} key={year}>
                             <Heading as="h2" className="article-taxonomy-year" size="6" weight="bold" color="tomato" mb="6">
                                 {year}
@@ -29,13 +29,13 @@ export const ArticlePreviewWrapper = () => {
                             <Grid className="articles site-margin-bottom" gap="2" columns="1">
                                 {articles.map((article, index) => (
                                     <Box className="article-item" id={index.toString()} key={index}>
-                                        <Article className="article-archive-item flex flex-col mb-1">
+                                        <article className="article-archive-item flex flex-col mb-1">
                                             <ArticlePreviewTitle title={article.attributes.title}/>
                                             <ArticlePreviewBody
                                                 content={article.attributes.content}
                                                 readingTime={article.attributes.readingTime}
                                             />
-                                        </Article>
+                                        </article>
                                     </Box>
                                 ))}
                             </Grid>
