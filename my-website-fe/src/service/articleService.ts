@@ -4,5 +4,6 @@ import ArticleYearGroup from "@/service/model/articleYearGroup";
 
 export const getAllGroupedAndDecreasedByYear = async (): Promise<ArticleYearGroup> => {
     const result: SuccessfulDataResponse<ArticleYearGroup> = await GET_REQUEST.SINGLE_WITH_PATH_VARIABLE("/article/grouped-by-year");
+    debugger;
     return result.data;
 }
