@@ -3,7 +3,7 @@ import ArticleYearGroup from "@/service/model/articleYearGroup";
 import {Article} from "@/service/model/article";
 
 export interface ArticleState {
-    articles: ArticleYearGroup<Article>;
+    articles: ArticleYearGroup;
 }
 
 const initialState: ArticleState = {
@@ -16,7 +16,7 @@ export const articleSlice = createSlice({
     name: 'articles',
     initialState,
     reducers: {
-        setArticles: (state, action: PayloadAction<ArticleYearGroup<Article>>) => {
+        setArticles: (state, action: PayloadAction<ArticleYearGroup>) => {
             state.articles = action.payload;
         },
     },
