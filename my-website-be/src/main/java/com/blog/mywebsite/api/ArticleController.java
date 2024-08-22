@@ -62,7 +62,7 @@ public class ArticleController {
     ) {
         BaseResponse<Map<Integer, List<ArticleOutput>>> response = new BaseResponse<>(
                 null,
-                ArticleMapper.INSTANCE.toArticleOutputMap(
+                ArticleMapper.INSTANCE.toArticleOutputMapForYear(
                         articleService.getGroupedArticlesByYear(
                                 articleGetGroupedByYearInput.publishDate(),
                                 articleGetGroupedByYearInput.searchOperation()
@@ -78,7 +78,7 @@ public class ArticleController {
     ){
         BaseResponse<Map<Integer, List<ArticleOutput>>> response = new BaseResponse<>(
                 null,
-                ArticleMapper.INSTANCE.toArticleOutputMap(
+                ArticleMapper.INSTANCE.toArticleOutputMapForYear(
                         articleService.getGroupedYearByCategoryName(categoryName)
                 )
         );

@@ -5,10 +5,12 @@ import com.blog.mywebsite.api.input.category.CategoryPutInput;
 import com.blog.mywebsite.common.util.ValueUtil;
 import com.blog.mywebsite.common.validator.CommonValidator;
 import com.blog.mywebsite.constant.EntityConstant;
+import com.blog.mywebsite.dto.ArticleDTO;
 import com.blog.mywebsite.dto.CategoryDTO;
 import com.blog.mywebsite.enumerator.SearchOperation;
 import com.blog.mywebsite.exception.EntityExistException;
 import com.blog.mywebsite.exception.EntityNotFoundException;
+import com.blog.mywebsite.mapper.ArticleMapper;
 import com.blog.mywebsite.mapper.CategoryMapper;
 import com.blog.mywebsite.model.Category;
 import com.blog.mywebsite.repository.CategoryRepository;
@@ -19,10 +21,7 @@ import org.springframework.stereotype.Service;
 
 import static com.blog.mywebsite.constant.CategoryConstant.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +51,12 @@ public class CategoryServiceImpl implements CategoryService{
                     TreeMap::new,
                     Collectors.toList()
             ));
+    }
+
+    @Override
+    public Map<String, List<ArticleDTO>> getGroupedArticlesByCategoryName(){
+        List<Category> categoryList = categoryRepository.findAll();
+        return getArticlesGroupedByCategoryName(categoryList);
     }
 
     @Override
@@ -99,5 +104,13 @@ public class CategoryServiceImpl implements CategoryService{
         if(Objects.nonNull(parentId)){
             category.setParent(findById(parentId));
         }
+    }
+
+    private Map<String, List<ArticleDTO>> getArticlesGroupedByCategoryName(List<Category> categoryList) {
+        return categoryList.stream()
+                .collect(Collectors.toMap(
+                        Category::getName,
+                        category -> ArticleMapper.INSTANCE.articlesToArticleDTOs(category.getArticles())
+                ));
     }
 }

@@ -28,6 +28,7 @@ public final class ArticleTestUtil {
     public static ArticlePutInput createArticlePutInput(){
         return new ArticlePutInput(
                 ArticleTestConstant.TITLE,
+                ArticleTestConstant.CATEGORY_ID,
                 ArticleTestConstant.CONTENT,
                 ArticleTestConstant.READING_TIME
         );
@@ -52,6 +53,7 @@ public final class ArticleTestUtil {
     public static ArticleDTO createArticleDTO(){
         return new ArticleDTO(
                 ArticleTestConstant.ID,
+                null,
                 ArticleTestConstant.TITLE,
                 ArticleTestConstant.CONTENT,
                 ArticleTestConstant.READING_TIME,

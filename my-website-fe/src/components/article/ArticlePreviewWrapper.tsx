@@ -1,13 +1,11 @@
 import {Box, Grid, Heading} from "@radix-ui/themes";
 import {ArticlePreviewTitle} from "@/components/article/ArticlePreviewTitle";
 import {ArticlePreviewBody} from "@/components/article/ArticlePreviewBody";
-import ArticleYearGroup from "@/service/model/articleYearGroup";
+import {useArticleStore} from "@/lib/articleStore";
 
-interface ArticlePreviewWrapperProps {
-    articles: ArticleYearGroup
-}
+export const ArticlePreviewWrapper = () => {
+    const articles = useArticleStore((state) => state.articlesGroupedByYear);
 
-export const ArticlePreviewWrapper = ({articles}: ArticlePreviewWrapperProps) => {
     const renderArticles = () => {
         return (
             <>

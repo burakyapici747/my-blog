@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public record ArticleDTO(
         String id,
+        String categoryId,
         String title,
         String content,
         int readingTime,

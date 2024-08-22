@@ -97,6 +97,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDTO updateById(String id, ArticlePutInput articlePutInput) {
         Article article = findById(id);
         checkTitleIsExistByTitle(articlePutInput.title());
+        checkCategoryIsExistByCategoryId(articlePutInput.categoryId());
         ArticleMapper.INSTANCE.articlePutRequestToArticleDTO(articlePutInput, article);
         return ArticleMapper.INSTANCE.articleToArticleDTO(articleRepository.save(article));
     }
@@ -132,5 +133,11 @@ public class ArticleServiceImpl implements ArticleService {
                     TreeMap::new,
                     Collectors.toList()
             ));
+    }
+
+    private void checkCategoryIsExistByCategoryId(String categoryId){
+        if(Objects.nonNull(categoryId)){
+            categoryService.findById(categoryId);
+        }
     }
 }

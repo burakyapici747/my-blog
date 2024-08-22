@@ -3,8 +3,10 @@ package com.blog.mywebsite.api;
 import com.blog.mywebsite.api.input.category.CategoryGetInput;
 import com.blog.mywebsite.api.input.category.CategoryPostInput;
 import com.blog.mywebsite.api.input.category.CategoryPutInput;
+import com.blog.mywebsite.api.output.ArticleOutput;
 import com.blog.mywebsite.api.output.CategoryOutput;
 import com.blog.mywebsite.api.response.BaseResponse;
+import com.blog.mywebsite.mapper.ArticleMapper;
 import com.blog.mywebsite.mapper.CategoryMapper;
 import com.blog.mywebsite.service.CategoryService;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.blog.mywebsite.constant.APIConstant.CATEGORY_URL;
 
@@ -36,6 +39,17 @@ public class CategoryController {
                                 categoryGetInput.parentId(),
                                 categoryGetInput.name()
                         )
+                )
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/grouped-articles")
+    public ResponseEntity<BaseResponse<Map<String, List<ArticleOutput>>>> getGroupedArticlesByCategory(){
+        BaseResponse<Map<String, List<ArticleOutput>>> response = new BaseResponse<>(
+                null,
+                ArticleMapper.INSTANCE.toArticleOutputMapForCategoryName(
+                        categoryService.getGroupedArticlesByCategoryName()
                 )
         );
         return ResponseEntity.ok(response);

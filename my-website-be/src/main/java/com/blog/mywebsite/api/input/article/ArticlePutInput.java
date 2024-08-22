@@ -11,6 +11,9 @@ public record ArticlePutInput(
         @Size(min = ARTICLE_TITLE_MIN_LENGTH, max = ARTICLE_TITLE_MAX_LENGTH, message = ARTICLE_TITLE_MESSAGE)
         String title,
         @Nullable
+        @Size(min = ID_MIN_LENGTH, max = ID_MAX_LENGTH, message = CATEGORY_ID_SIZE_MESSAGE)
+        String categoryId,
+        @Nullable
         @Size(min = ARTICLE_CONTENT_MIN_LENGTH, max = ARTICLE_CONTENT_MAX_LENGTH, message = ARTICLE_CONTENT_MESSAGE)
         String content,
         @Nullable
