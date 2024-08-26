@@ -1,6 +1,10 @@
-import {Avatar, Box, Container, Flex, Heading, Text} from "@radix-ui/themes";
-import {GitHubLogoIcon, LinkedInLogoIcon} from "@radix-ui/react-icons";
+'use client'
+import {Avatar, Box, Container, Flex, Grid, Heading, Text} from "@radix-ui/themes";
 import {Noto_Sans_Georgian} from "@next/font/google"
+import {ArticlePreviewWrapper} from "@/components/article/ArticlePreviewWrapper";
+import React from "react";
+import useFetch from "@/hook/useFetch";
+import {getRecentByLimit} from "@/service/articleService";
 
 const roboto = Noto_Sans_Georgian({
     subsets: ['latin-ext'],
@@ -9,6 +13,8 @@ const roboto = Noto_Sans_Georgian({
 });
 
 function Page() {
+    const [loading, data] = useFetch(getRecentByLimit, {});
+    debugger;
     return (
         <>
             <Box
@@ -19,7 +25,7 @@ function Page() {
             >
                 <Container size="2">
                     <h1 className={`welcome-message-title font-serif`} style={{fontFamily: "georgia", color: "#333", fontSize: "40px"}}>
-                        Hello there
+                        Hello there...
                     </h1>
                     <Text
                         style={{color: '#333333'}}
@@ -29,77 +35,27 @@ function Page() {
                         align="left"
                         as="p"
                     >
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        Welcome to my blog.
+                        The content you will find here mostly consists of notes that I have taken for myself.
+                        Without adhering to a specific category, I mainly share reviews of the books I've read, my experiences in the field of software, and occasionally writings on various other topics.
+                        I hope you find the content here as interesting and useful as I do.
                     </Text>
                 </Container>
             </Box>
 
             <Container className="site-main-container" size="2">
-                <Flex display="flex" direction="column" gap="9">
-                    <Flex className="developer-info" display="flex" direction="row" align="start" justify="between">
-                        <Box>
-                            <Flex display="flex" direction="column" gap="6" justify="between">
-                                <Flex className="developer-info-informations" direction="column" gap="2">
-                                    <Heading className="developer-info-name" weight="regular" size="8" as="h6">
-                                        Burak Yapıcı
-                                    </Heading>
-                                    <Text className="developer-info-title" size="3" weight="light" align="left">
-                                        Backend Developer
-                                    </Text>
-                                </Flex>
-                                <Flex display="flex" direction="row" gap="3">
-                                    <GitHubLogoIcon/>
-                                    <LinkedInLogoIcon/>
-                                </Flex>
-                            </Flex>
-                        </Box>
-                        <Box>
-                            <Avatar src="/img/profile.png" fallback="A" radius="full" variant="soft" size="7"/>
-                        </Box>
-                    </Flex>
-
-                    <Flex className="bio" display="flex" direction="column" gap="2">
-                        <Heading className="" as="h1" size="6" weight="regular">Bio</Heading>
-                        <Flex className="" display="flex" direction="column" gap="2">
-                            <Flex className="" display="flex" direction="row" gap="3">
-                                <Text as="span" weight="bold" size="4">1997</Text>
-                                <Text as="p" weight="regular" size="3">Born in Osaka (大阪), Japan.</Text>
-                            </Flex>
-                        </Flex>
-                        <Flex className="" display="flex" direction="column" gap="2">
-                            <Flex className="" display="flex" direction="row" gap="3">
-                                <Text as="span" weight="bold" size="4">1997</Text>
-                                <Text as="p" weight="regular" size="3">Completed the Master's Program in the Graduate School of Information Science at Nara Institute of Science and Technology (奈良先端科学技術大学院大学情報科学研究科修士課程)</Text>
-                            </Flex>
-                        </Flex>
-                        <Flex className="" display="flex" direction="column" gap="2">
-                            <Flex className="" display="flex" direction="row" gap="3">
-                                <Text as="span" weight="bold" size="4">1997</Text>
-                                <Text as="p" weight="regular" size="3">Worked at Yahoo! Japan (ヤフー株式会社入社)</Text>
-                            </Flex>
-                        </Flex>
-                        <Flex className="" display="flex" direction="column" gap="2">
-                            <Flex className="" display="flex" direction="row" gap="3">
-                                <Text as="span" weight="bold" size="4">1997</Text>
-                                <Text as="p" weight="regular" size="3">Working as a freelancer</Text>
-                            </Flex>
-                        </Flex>
-                    </Flex>
-
-
-                    <Box className="hobbies-info" mb="8">
-                        <Heading weight="bold" as="h3" size="5">I ♥</Heading>
-                        <Flex display="flex" direction="column">
-                            <Text as="p">🏊‍ swimming</Text>
-                            <Text as="p">🏕️ camping</Text>
-                            <Text as="p">🎿 skiing</Text>
-                            <Text as="p">🕹️ computer games</Text>
-                        </Flex>
-                    </Box>
-
-                </Flex>
+                <section>
+                    <Heading as="h2" className="article-taxonomy-year" size="6" weight="bold" color="tomato" mb="6">
+                        Last Articles
+                    </Heading>
+                    <Grid className="articles site-margin-bottom" gap="2" columns="1">
+                        {
+                            data && Object.values(data).map((articles, index) => {
+                                return <ArticlePreviewWrapper key={index} article={articles} index={index}/>
+                            })
+                        }
+                    </Grid>
+                </section>
             </Container>
         </>
     );
