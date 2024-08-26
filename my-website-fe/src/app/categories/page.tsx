@@ -1,22 +1,15 @@
 'use client'
-import {Container, Flex, Text} from "@radix-ui/themes";
+import {Container, Flex, Grid, Heading, Text} from "@radix-ui/themes";
 import Link from "next/link";
-import {CategoryArticlePreviewWrapper} from "@/components/category/CategoryArticlePreviewWrapper";
 import useFetch from "@/hook/useFetch";
 import {getAllGroupedByCategoryName} from "@/service/articleService";
-import {useArticleStore} from "@/lib/articleStore";
-import React, {useEffect} from "react";
-import ArticleCategoryNameGroup from "@/service/model/articleCategoryNameGroup";
+import React from "react";
+import {BaseResponseModel} from "@/service/model/baseResponseModel";
+import {Article} from "@/service/model/article";
+import {ArticlePreviewWrapper} from "@/components/article/ArticlePreviewWrapper";
 
 const CategoriesPage = () => {
     const [loading, data] = useFetch(getAllGroupedByCategoryName, {});
-    const setArticlesGroupedByCategoryName = useArticleStore((state) => state.setArticlesGroupedByCategoryName);
-
-    useEffect(() => {
-        if(data){
-            setArticlesGroupedByCategoryName(data as ArticleCategoryNameGroup)
-        }
-    }, [data]);
 
     return(
         <>
@@ -36,7 +29,22 @@ const CategoriesPage = () => {
                             ))
                         }
                     </ul>
-                   <CategoryArticlePreviewWrapper/>
+                   {
+                       data && Object.entries(data).map(([categoryName, groupedArticles]) => (
+                           <section id={categoryName} key={categoryName}>
+                               <Heading as="h2" className="article-taxonomy-year" size="6" weight="bold" color="tomato" mb="6">
+                                   {categoryName}
+                               </Heading>
+                               <Grid className="articles site-margin-bottom" gap="2" columns="1">
+                                   {
+                                       groupedArticles.map((articles: BaseResponseModel<Article>, index: number) => {
+                                           return <ArticlePreviewWrapper key={index} article={articles} index={index}/>
+                                       })
+                                   }
+                               </Grid>
+                           </section>
+                       ))
+                   }
                </Flex>
            </Container>
         </>

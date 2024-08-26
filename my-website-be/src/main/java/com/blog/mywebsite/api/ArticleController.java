@@ -85,7 +85,7 @@ public class ArticleController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("comments")
+    @GetMapping("/comments")
     public ResponseEntity<BaseResponse<List<CommentOutput>>> getComments(
             @RequestParam(value = "id")
             @Valid
@@ -96,6 +96,15 @@ public class ArticleController {
         BaseResponse<List<CommentOutput>> response = new BaseResponse<>(
                 null,
                 CommentMapper.INSTANCE.commentDTOListToCommentOutputList(articleService.getComments(id))
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/recent/{limit}")
+    public ResponseEntity<BaseResponse<List<ArticleOutput>>> getRecentByLimit(@PathVariable int limit){
+        BaseResponse<List<ArticleOutput>> response = new BaseResponse<>(
+                null,
+                ArticleMapper.INSTANCE.articleDTOListToArticleOutputList(articleService.getRecentByLimit(limit))
         );
         return ResponseEntity.ok(response);
     }

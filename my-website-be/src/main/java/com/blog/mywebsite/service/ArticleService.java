@@ -22,4 +22,5 @@ public interface ArticleService {
     ArticleDTO deleteById(String id);
     ArticleDTO updateById(String id, ArticlePutInput articlePutInput);
     Article findById(String id);
+    List<ArticleDTO> getRecentByLimit(int limit);
 }

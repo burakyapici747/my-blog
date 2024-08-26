@@ -109,6 +109,12 @@ public class ArticleServiceImpl implements ArticleService {
         return ArticleMapper.INSTANCE.articleToArticleDTO(article);
     }
 
+    @Override
+    public List<ArticleDTO> getRecentByLimit(int limit) {
+        List<Article> articleList = articleRepository.findRecentByLimit(limit);
+        return ArticleMapper.INSTANCE.articlesToArticleDTOs(articleList);
+    }
+
     public Article findById(String id){
         return articleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(EntityConstant.ARTICLE_NOT_FOUND));
