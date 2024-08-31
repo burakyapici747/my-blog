@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Burak YAPICI",
+    "avatar": "/static/images/profile.png",
+    "occupation": "Software Developer",
+    "email": "address@yoursite.com",
+    "linkedin": "https://www.linkedin.com/in/burakyapici/",
+    "github": "https://github.com/burakyapici747",
+    "body": {
+      "raw": "### Hello...\nThe content you will find here mostly consists of notes that I have taken for myself.\nWithout adhering to a specific category, I mainly share reviews of the books I've read, my experiences in the field of software, and occasionally writings on various other topics.\nI hope you find the content here as interesting and useful as I do.",
+      "code": "var Component=(()=>{var p=Object.create;var i=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var u=Object.getOwnPropertyNames;var f=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var w=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),y=(t,e)=>{for(var a in e)i(t,a,{get:e[a],enumerable:!0})},s=(t,e,a,r)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let o of u(e))!g.call(t,o)&&o!==a&&i(t,o,{get:()=>e[o],enumerable:!(r=m(e,o))||r.enumerable});return t};var x=(t,e,a)=>(a=t!=null?p(f(t)):{},s(e||!t||!t.__esModule?i(a,\"default\",{value:t,enumerable:!0}):a,t)),v=t=>s(i({},\"__esModule\",{value:!0}),t);var c=w((b,l)=>{l.exports=_jsx_runtime});var I={};y(I,{default:()=>d,frontmatter:()=>k});var n=x(c()),k={name:\"Burak YAPICI\",avatar:\"/static/images/profile.png\",occupation:\"Software Developer\",\"//company\":\"Stanford University\",email:\"address@yoursite.com\",linkedin:\"https://www.linkedin.com/in/burakyapici/\",github:\"https://github.com/burakyapici747\"};function h(t){let e={a:\"a\",h3:\"h3\",p:\"p\",path:\"path\",span:\"span\",svg:\"svg\",...t.components};return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsxs)(e.h3,{className:\"content-header\",id:\"hello\",children:[(0,n.jsx)(e.a,{\"aria-hidden\":\"true\",href:\"#hello\",tabIndex:\"-1\",children:(0,n.jsx)(n.Fragment,{children:(0,n.jsx)(e.span,{className:\"content-header-link\",children:(0,n.jsxs)(e.svg,{className:\"h-5 linkicon w-5\",fill:\"currentColor\",viewBox:\"0 0 20 20\",xmlns:\"http://www.w3.org/2000/svg\",children:[(0,n.jsx)(e.path,{d:\"M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z\"}),(0,n.jsx)(e.path,{d:\"M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z\"})]})})})}),\"Hello...\"]}),(0,n.jsx)(e.p,{children:\"The content you will find here mostly consists of notes that I have taken for myself. Without adhering to a specific category, I mainly share reviews of the books I've read, my experiences in the field of software, and occasionally writings on various other topics. I hope you find the content here as interesting and useful as I do.\"})]})}function d(t={}){let{wrapper:e}=t.components||{};return e?(0,n.jsx)(e,{...t,children:(0,n.jsx)(h,{...t})}):h(t)}return v(I);})();\n;return Component;"
+    },
+    "_id": "authors/default.mdx",
+    "_raw": {
+      "sourceFilePath": "authors/default.mdx",
+      "sourceFileName": "default.mdx",
+      "sourceFileDir": "authors",
+      "contentType": "mdx",
+      "flattenedPath": "authors/default"
+    },
+    "type": "Authors",
+    "readingTime": {
+      "text": "1 min read",
+      "minutes": 0.305,
+      "time": 18300,
+      "words": 61
+    },
+    "slug": "default",
+    "path": "authors/default",
+    "filePath": "authors/default.mdx",
+    "toc": [
+      {
+        "value": "Hello...",
+        "url": "#hello",
+        "depth": 3
+      }
+    ]
+  }
+]
