@@ -16,6 +16,7 @@ COPY --from=builder /app/app/node_modules ./app/node_modules
 COPY --from=builder /app/app/package.json ./package.json
 COPY --from=builder /app/app/data ./data
 COPY --from=builder /app/app ./app
+# Test deneme
 
 EXPOSE 3000
 
